@@ -1,0 +1,193 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Sandbox Jabberwocky",
+        "description": "Test API for Jabberwocky"
+    },
+    "tags": [
+        {
+            "name": "Test Authentication",
+            "description": "Validate token authorization"
+        }
+    ],
+    "paths": {
+        "/generate-token-method-post" : {
+            "post" : {
+                "tags" : [
+                    "Test Authentication"
+                ],
+                "summary": "Create token to put header",
+                "parameters" : [
+                    {
+                        "in": "body",
+                        "name": "Info",
+                        "schema": {
+                            "type" : "object",
+                            "properties" : {
+                                "id" : {
+                                    "type" : "string"
+                                },
+                                "name" : {
+                                    "type" : "string"
+                                },
+                                "age" : {
+                                    "type" : "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dataToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/post" : {
+            "post" : {
+                "tags" : [
+                    "Test Authentication"
+                ],
+                "security" : {
+                    "x-date" : [],
+                    "authorization" : []
+                },
+                "parameters" : [
+                    {
+                        "name": "x-date",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value x-date from API /generate-token above",
+                        "type": "string"
+                    },
+                    {
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value x-api-key from API /generate-token above",
+                        "type": "string"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value authorization from API /generate-token above. Syntax: Bearer + token",
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "Info",
+                        "schema": {
+                            "type" : "object",
+                            "properties" : {
+                                "id" : {
+                                    "type" : "string"
+                                },
+                                "name" : {
+                                    "type" : "string"
+                                },
+                                "age" : {
+                                    "type" : "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "OK"
+                    },
+                    "401" : {
+                        "description" : "Forbidden"
+                    }
+                }
+            }
+        },
+        "/generate-token-method-get/{params}" : {
+            "get" : {
+                "tags" : ["Test Authentication"],
+                "parameters" : [
+                    {
+                        "in": "path",
+                        "name": "params",
+                        "required": true
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dataToken"
+                        }
+                    }
+                }
+            }
+        },
+        "/" : {
+            "get" : {
+                "tags" : ["Test Authentication"],
+                "security" : {
+                    "x-date" : [],
+                    "authorization" : []
+                },
+                "parameters" : [
+                    {
+                        "in": "path",
+                        "name": "params",
+                        "required": true
+                    },
+                    {
+                        "name": "x-date",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value x-date from API /generate-token above",
+                        "type": "string"
+                    },
+                    {
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value x-api-key from API /generate-token above",
+                        "type": "string"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "description": "Get value authorization from API /generate-token above. Syntax: Bearer + token",
+                        "type": "string"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "OK"
+                    },
+                    "401" : {
+                        "description" : "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dataToken" : {
+            "type" : "object",
+            "properties" : {
+                "x_date" : {
+                    "type" : "string"
+                },
+                "x_api_key" : {
+                    "type" : "string"
+                },
+                "token" : {
+                    "type" : "string"
+                }
+            }
+        }
+    }
+}
